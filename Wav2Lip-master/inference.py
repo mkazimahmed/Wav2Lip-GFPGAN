@@ -158,12 +158,13 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print('Using {} for inference.'.format(device))
 
 def _load(checkpoint_path):
-	if device == 'cuda':
-		checkpoint = torch.load(checkpoint_path)
-	else:
-		checkpoint = torch.load(checkpoint_path,
-								map_location=lambda storage, loc: storage)
-	return checkpoint
+    if device == 'cuda':
+        checkpoint = torch.load(checkpoint_path, weights_only=False)
+    else:
+        checkpoint = torch.load(checkpoint_path,
+                                map_location=lambda storage, loc: storage,
+                                weights_only=False)
+    return checkpoint
 
 def load_model(path):
 	model = Wav2Lip()
